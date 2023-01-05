@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org " xmlns:layout="http://www.utraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="/">
+  <th:block th:replace="~{fragments/fragment-app :: link}"></th:block>
+  </base>
+</head>
+<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse text-sm" th:with="active=${'Rdv'}">
+<div class="wrapper">
+  <th:block th:replace="~{fragments/fragment-app :: header}"></th:block>
+  <th:block th:replace="~{fragments/fragment-app :: menu}"></th:block>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Liste RDV</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">liste RDV</li>
+            </ol>
+          </div>
+      </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+
+                <div class="row border-bottom mb-3">
+                  <div class="m-3">
+              <span class="text-success text-center">
+                <i class="fas fa-calendar-day" style="font-size: 1.5rem;"></i>
+              </span>
+                  </div>
+                  <div>
+                    <p class="text-success" style="font-size: 0.8rem;" >date aujourd'huit</p>
+                    <p class="text-black" style="font-size: 1rem;" th:text="${dateNow}"></p>
+                  </div>
+                </div>
+
+                <table id="example1" class="table">
+                  <thead class="thead-dark">
+                  <tr>
+                    <th>Nom de patient</th>
+                    <th>Heure debut</th>
+                    <th>Heure fin</th>
+                    <th>Traitement</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="rdv : ${rdvs}">
+                    <td th:text="${rdv.patient.Nom+' '+rdv.patient.Prenom}"></td>
+                    <td th:text="${rdv.HeureRdv}"></td>
+                    <td th:text="${rdv.HeureFin}"></td>
+                    <td th:text="${rdv.Traitement}"></td>
+                    <td>
+                      <div class="btn-group btn-group-sm" id="alaSalle">
+                        <span  class="btn text-info" data-toggle="modal" data-target="#modal-lt" th:id="${rdv.id}" onclick="modal_lt(this.id)"><i class="fas fa-sign-in-alt"></i></span>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>Nom de patient</th>
+                    <th>Heure debut</th>
+                    <th>Heure fin</th>
+                    <th>Traitement</th>
+                    <th></th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+       <!-- /.modal -->
+    </section>
+    <!-- /.content -->
+
+    <div class="modal fade" id="modal-lt">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <form th:method="post" th:object="${salleAttobject}" th:action="@{/validerRdv}">
+            <div class="modal-header">
+              <h4 class="modal-title">Ajouter un attentiste </h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group" id="hiden">
+                <label>rdv</label>
+                <input type="text" class="form-control" th:field="*{patient.id}">
+              </div>
+
+              <div class="form-group">
+                <label>Heure d'arrivee</label>
+                <div class="input-group date" id="time3" data-target-input="nearest">
+                  <input type="text" class="form-control datetimepicker-input" data-target="#time3" th:field="*{heureArrive}">
+                  <div class="input-group-append" data-target="#time3" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-clock"></i></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label >Status</label>
+                <select class="form-control" th:field="*{status}">
+                  <option th:value="normal">normal</option>
+                  <option th:value="Grave">Grave</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+              <button type="submit" class="btn btn-info">Ajouter</button>
+            </div>
+          </form>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+  <!-- Main Footer -->
+  <th:block th:replace="~{fragments/fragment-app :: footer}"></th:block>
+</div>
+<th:block th:replace="~{fragments/fragment-app :: script}"></th:block>
+<script>
+  $('#time3').datetimepicker({
+    format: 'LT'
+  });
+
+  function modal_lt(id){
+var input =document.getElementById("patient.id");
+    input.setAttribute("value",id);
+var hiden =document.getElementById("hiden");
+    hiden.setAttribute("style","display:none;");
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org " xmlns:layout="http://www.utraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Liste d'attente</title>
+  <base href="/">
+  <th:block th:replace="~{fragments/fragment-app :: link}"></th:block>
+  </base>
+</head>
+<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse text-sm" th:with="active=${'Attente'}">
+<div class="wrapper">
+  <th:block th:replace="~{fragments/fragment-app :: header}"></th:block>
+  <th:block th:replace="~{fragments/fragment-app :: menu}"></th:block>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Liste d'attente</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Liste d'attente</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table">
+                  <thead class="thead-dark">
+                  <tr>
+                    <th>Numero</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Cin</th>
+                    <th>Telephone</th>
+                    <th>Heure Arrivee</th>
+                    <th>statut</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="slatt : ${salleAttentes}">
+                    <td th:text="${slatt.id}"></td>
+                    <td th:text="${slatt.patient.Prenom}"></td>
+                    <td th:text="${slatt.patient.Nom}"></td >
+                    <td th:text="${slatt.patient.Cin}"></td>
+                    <td th:text="${slatt.patient.TeleM1}"></td>
+                    <td th:text="${slatt.heureArrive}"></td>
+                    <td th:text="${slatt.status}"></td>
+                  </tr>
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>Numero</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Cin</th>
+                    <th>Telephone</th>
+                    <th>Heure Arrivee</th>
+                    <th>statut</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+  <th:block th:replace="~{fragments/fragment-app :: footer}"></th:block>
+</div>
+<!-- ./wrapper -->
+<th:block th:replace="~{fragments/fragment-app :: script}"></th:block>
+</body>
+</html>
